@@ -1,31 +1,39 @@
 import urllib.request
 import numpy as np
 
+#Llame el dataset desde intenet
 #urllib.request.urlretrieve('https://raw.githubusercontent.com/plotly/datasets/refs/heads/master/diabetes.csv', 'diabetes.txt')
+diabetes_data = np.genfromtxt('diabetes.txt', delimiter=',', skip_header=1) #Guarde el dataset en mi computadora
 
-diabetes_data = np.genfromtxt('diabetes.txt', delimiter=',', skip_header=1) 
+#Analizar el dataset
 print("El contenido del dataset: \n", diabetes_data)
 print("Las dimensiones del arreglo: \n", diabetes_data.shape)
 
+#Nuevo arreglo de unos
 pesos=np.array([1,1,1,1,1,1,1,1,1])
 print("El contenido del arreglo de pesos: \n", pesos)
 print("Las dimensiones del arreglo: \n", pesos.shape)
 
+#Multiplicacion del dataset por los pesos
 diabetes_modificado = diabetes_data @ pesos
 print("El arreglo con los resultados de la multiplicación: \n", diabetes_modificado)
 print("Las dimensiones del arreglo con los resultados\n ", diabetes_modificado.shape)
 
+#Creacion de otro archivo del dataset con una nueva columna
 diabetes_results = np.concatenate((diabetes_data, diabetes_modificado.reshape(768, 1)), axis=1)
 print("Resultado de concatenarle una columna más al arreglo: \n", diabetes_results)
 np.savetxt('diabetes_results.txt',diabetes_results,fmt='%.2f',delimiter=',',header='Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction,Age,Outcome,Resultado',comments='')
 
+#Operaciones de matematicas
 print('Suma todos los elementos de la columna de edad:',diabetes_data[:,7].sum())
 
+#Operaciones de estadistica
 print('Promedio de Edad del dataset:',diabetes_data[:,7].mean())
 print('Desviacion estandar de la Edad del dataset:',diabetes_data[:,7].std())
 print('Mayor Edad del dataset:',diabetes_data[:,7].max())
 print('Menor Edad del dataset:',diabetes_data[:,7].min())
 
+#Operaciones aritmeticas
 print('Dataset mas 1:\n',diabetes_data+1)
 print('Dataset por 2:\n',diabetes_data*2)
 print('Dataset entre 10:\n',diabetes_data/10)
